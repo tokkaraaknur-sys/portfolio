@@ -3,169 +3,632 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aknur Tokkara | Portfolio</title>
-
+<title>Aknur Tokkara — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
+/* ───────────────────────────────────────────
+   TOKENS
+─────────────────────────────────────────── */
+:root{
+  --bg:       #060b16;
+  --surface:  #0c1422;
+  --surface2: #111d30;
+  --border:   rgba(96,165,250,0.1);
+  --border2:  rgba(96,165,250,0.22);
+  --blue:     #3b82f6;
+  --blue-lt:  #60a5fa;
+  --blue-dk:  #1d4ed8;
+  --indigo:   #6366f1;
+  --sky:      #38bdf8;
+  --green:    #34d399;
+  --text:     #e2e8f0;
+  --sub:      #94a3b8;
+  --muted:    #4b5d7a;
 }
 
+/* ── RESET ── */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
 body{
-background:#0f172a;
-color:white;
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:16px;
+  line-height:1.65;
+  overflow-x:hidden;
 }
 
-header{
-padding:80px 20px;
-text-align:center;
-background:linear-gradient(135deg,#2563eb,#7c3aed);
+/* ── STAR / GRID LAYER ── */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% -10%, rgba(59,130,246,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 110%,  rgba(99,102,241,0.1) 0%, transparent 55%);
+  pointer-events:none;z-index:0;
+}
+body::after{
+  content:'';
+  position:fixed;inset:0;
+  background-image:
+    linear-gradient(rgba(96,165,250,0.025) 1px, transparent 1px),
+    linear-gradient(90deg,rgba(96,165,250,0.025) 1px, transparent 1px);
+  background-size:48px 48px;
+  pointer-events:none;z-index:0;
 }
 
-header h1{
-font-size:52px;
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 48px;
+  background:rgba(6,11,22,0.75);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{
+  font-family:'JetBrains Mono',monospace;
+  font-size:14px;color:var(--blue-lt);letter-spacing:.06em;
+}
+.nav-links{display:flex;gap:30px;list-style:none}
+.nav-links a{
+  font-size:13px;color:var(--sub);text-decoration:none;
+  font-family:'JetBrains Mono',monospace;letter-spacing:.07em;
+  transition:color .2s;
+}
+.nav-links a:hover{color:var(--blue-lt)}
+
+/* ── HERO ── */
+.hero{
+  position:relative;z-index:1;
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  padding:120px 24px 80px;
+}
+.hero-inner{
+  display:grid;
+  grid-template-columns:1fr 340px;
+  gap:60px;
+  max-width:1000px;
+  width:100%;
+  align-items:center;
 }
 
-header p{
-font-size:22px;
-margin-top:10px;
+/* text side */
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:5px 14px;
+  border:1px solid var(--border2);border-radius:100px;
+  font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--sky);
+  background:rgba(56,189,248,.07);margin-bottom:24px;
+}
+.hero-badge .dot{
+  width:6px;height:6px;border-radius:50%;background:var(--green);
+  animation:pulse 2s ease infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.75)}}
+
+.hero h1{
+  font-size:clamp(38px,6vw,68px);
+  font-weight:800;letter-spacing:-.03em;line-height:1.06;
+  background:linear-gradient(135deg,#f1f5f9 25%,var(--blue-lt) 60%,var(--indigo) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-role{
+  margin-top:14px;font-size:17px;color:var(--sub);font-weight:500;
+}
+.hero-role span{color:var(--blue-lt);font-weight:600;}
+.hero-desc{
+  margin-top:20px;font-size:15px;color:var(--muted);max-width:460px;line-height:1.75;
+}
+.hero-cta{margin-top:36px;display:flex;gap:12px;flex-wrap:wrap;}
+
+/* photo side */
+.hero-photo-wrap{
+  position:relative;display:flex;align-items:center;justify-content:center;
+}
+.hero-photo-wrap::before{
+  content:'';position:absolute;
+  width:320px;height:320px;border-radius:50%;
+  background:conic-gradient(from 180deg, var(--blue),var(--indigo),var(--sky),var(--blue));
+  animation:spin 8s linear infinite;
+  padding:2px;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hero-photo-ring{
+  position:relative;
+  width:310px;height:310px;border-radius:50%;
+  background:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+  box-shadow:0 0 60px rgba(59,130,246,.2);
+}
+.hero-photo-ring img{
+  width:100%;height:100%;object-fit:cover;border-radius:50%;
+  display:block;
+}
+.hero-photo-placeholder{
+  width:100%;height:100%;border-radius:50%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:10px;
+  background:var(--surface2);
+  color:var(--muted);font-size:13px;text-align:center;
+  font-family:'JetBrains Mono',monospace;
+}
+.hero-photo-placeholder span{font-size:48px;}
+
+/* ── BUTTONS ── */
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:13px 26px;border-radius:10px;
+  font-size:14px;font-weight:700;text-decoration:none;
+  transition:all .25s;cursor:pointer;border:none;
+  font-family:'Plus Jakarta Sans',sans-serif;
+}
+.btn-primary{
+  background:var(--blue);color:#fff;
+  box-shadow:0 0 28px rgba(59,130,246,.35);
+}
+.btn-primary:hover{background:#2563eb;transform:translateY(-2px);box-shadow:0 0 40px rgba(59,130,246,.5);}
+.btn-ghost{
+  background:transparent;color:var(--text);
+  border:1px solid var(--border2);
+}
+.btn-ghost:hover{border-color:var(--blue-lt);color:var(--blue-lt);transform:translateY(-2px);}
+
+/* ── SECTIONS ── */
+.section{
+  position:relative;z-index:1;
+  max-width:960px;margin:0 auto;padding:90px 24px;
+}
+.sec-label{
+  font-family:'JetBrains Mono',monospace;font-size:12px;
+  color:var(--blue);letter-spacing:.15em;text-transform:uppercase;margin-bottom:10px;
+}
+.sec-title{
+  font-size:clamp(26px,3.5vw,40px);font-weight:800;letter-spacing:-.025em;
+  color:#f1f5f9;margin-bottom:40px;
 }
 
-section{
-max-width:900px;
-margin:auto;
-padding:60px 20px;
+/* ── ABOUT ── */
+.about-card{
+  background:var(--surface);
+  border:1px solid var(--border);border-radius:24px;
+  padding:40px;position:relative;overflow:hidden;
+}
+.about-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--blue),var(--indigo),var(--sky));
+}
+.about-card p{font-size:16px;color:var(--sub);line-height:1.85;}
+.about-card strong{color:var(--text);font-weight:700;}
+.about-stats{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px;
+}
+.stat-box{
+  background:var(--surface2);border:1px solid var(--border);border-radius:14px;
+  padding:20px;text-align:center;
+}
+.stat-num{font-size:28px;font-weight:800;color:var(--blue-lt);display:block;}
+.stat-lbl{font-size:12px;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-top:4px;}
+
+/* ── SKILLS ── */
+.skills-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px;
+}
+.skill-chip{
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  padding:24px 16px;
+  background:var(--surface);border:1px solid var(--border);border-radius:18px;
+  font-size:13px;font-weight:700;color:var(--text);
+  transition:all .25s;cursor:default;position:relative;overflow:hidden;
+}
+.skill-chip::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 50% 0%, rgba(59,130,246,.12), transparent 70%);
+  opacity:0;transition:opacity .3s;
+}
+.skill-chip:hover{
+  border-color:var(--blue-lt);transform:translateY(-5px);
+  box-shadow:0 16px 32px rgba(0,0,0,.3),0 0 0 1px rgba(96,165,250,.2);
+}
+.skill-chip:hover::before{opacity:1;}
+.skill-icon{font-size:28px;line-height:1;}
+.skill-bar-wrap{width:80%;height:3px;background:var(--surface2);border-radius:10px;overflow:hidden;}
+.skill-bar{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--blue),var(--sky));transform-origin:left;transform:scaleX(0);transition:transform .6s .15s ease;}
+.skill-chip.visible .skill-bar{transform:scaleX(1);}
+
+/* ── PROJECTS ── */
+.projects-grid{display:grid;gap:20px;}
+.proj-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:22px;
+  padding:36px;transition:all .3s;position:relative;overflow:hidden;
+}
+.proj-card::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(500px circle at var(--mx,50%) var(--my,50%),rgba(59,130,246,.05),transparent 40%);
+  opacity:0;transition:opacity .4s;
+}
+.proj-card:hover::after{opacity:1;}
+.proj-card:hover{border-color:rgba(96,165,250,.3);transform:translateY(-4px);box-shadow:0 24px 48px rgba(0,0,0,.35);}
+.proj-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--blue),var(--indigo));
+  opacity:0;transition:opacity .3s;
+}
+.proj-card:hover::before{opacity:1;}
+.proj-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:4px 12px;border-radius:100px;font-size:11px;
+  background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);
+  color:var(--blue-lt);font-family:'JetBrains Mono',monospace;
+  margin-bottom:16px;
+}
+.proj-card h3{font-size:21px;font-weight:800;color:#f1f5f9;margin-bottom:10px;}
+.proj-card p{font-size:15px;color:var(--sub);line-height:1.75;margin-bottom:22px;}
+.tech-pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px;}
+.tech-pill{
+  padding:4px 11px;border-radius:7px;
+  background:var(--surface2);font-size:12px;
+  color:var(--muted);font-family:'JetBrains Mono',monospace;
+}
+.proj-links{display:flex;gap:10px;flex-wrap:wrap;}
+
+/* ── EDUCATION ── */
+.edu-list{display:flex;flex-direction:column;gap:18px;}
+.edu-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:18px;
+  padding:28px 32px;display:flex;gap:24px;align-items:flex-start;
+  transition:all .25s;
+}
+.edu-card:hover{border-color:var(--border2);transform:translateX(4px);}
+.edu-icon{
+  font-size:26px;width:52px;height:52px;min-width:52px;
+  background:var(--surface2);border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+}
+.edu-body{}
+.edu-school{font-size:17px;font-weight:700;color:#f1f5f9;}
+.edu-degree{font-size:14px;color:var(--blue-lt);font-weight:600;margin-top:3px;}
+.edu-year{
+  font-size:12px;color:var(--muted);font-family:'JetBrains Mono',monospace;
+  margin-top:8px;
 }
 
-h2{
-font-size:34px;
-margin-bottom:25px;
-color:#60a5fa;
+/* ── LANGUAGES ── */
+.lang-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;}
+.lang-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:18px;
+  padding:24px;transition:all .25s;
 }
-
-.card{
-background:#1e293b;
-padding:25px;
-border-radius:18px;
-margin-bottom:25px;
+.lang-card:hover{border-color:var(--border2);transform:translateY(-3px);}
+.lang-flag{font-size:30px;margin-bottom:10px;}
+.lang-name{font-size:16px;font-weight:700;color:#f1f5f9;}
+.lang-level{
+  font-size:12px;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-top:4px;
 }
-
-.skills span{
-display:inline-block;
-padding:10px 18px;
-margin:8px;
-background:#2563eb;
-border-radius:20px;
+.lang-dots{display:flex;gap:5px;margin-top:12px;}
+.lang-dot{
+  width:10px;height:10px;border-radius:50%;
+  background:var(--surface2);border:1px solid var(--muted);transition:background .3s;
 }
+.lang-dot.on{background:var(--blue);border-color:var(--blue);}
 
-a.button{
-display:inline-block;
-margin-top:15px;
-padding:12px 22px;
-background:#3b82f6;
-color:white;
-text-decoration:none;
-border-radius:10px;
-transition:.3s;
+/* ── CONTACT ── */
+.contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.contact-card{
+  display:flex;align-items:center;gap:16px;
+  padding:26px;background:var(--surface);border:1px solid var(--border);
+  border-radius:18px;text-decoration:none;color:var(--text);transition:all .25s;
 }
-
-a.button:hover{
-background:#1d4ed8;
+.contact-card:hover{border-color:var(--blue-lt);transform:translateY(-3px);background:var(--surface2);}
+.contact-ico{
+  font-size:22px;width:50px;height:50px;min-width:50px;
+  background:var(--surface2);border-radius:13px;
+  display:flex;align-items:center;justify-content:center;
 }
+.c-lbl{font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;}
+.c-val{font-size:14px;font-weight:700;}
 
+/* ── FOOTER ── */
 footer{
-padding:40px;
-text-align:center;
-background:#111827;
+  position:relative;z-index:1;
+  text-align:center;padding:36px 24px;
+  border-top:1px solid var(--border);
+  background:rgba(6,11,22,.85);
+}
+footer p{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted);}
+footer span{color:var(--blue-lt);}
+
+/* ── BACK TO TOP ── */
+#topBtn{
+  position:fixed;bottom:32px;right:32px;z-index:300;
+  width:46px;height:46px;border-radius:12px;
+  background:var(--blue);color:#fff;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;box-shadow:0 4px 20px rgba(59,130,246,.45);
+  opacity:0;pointer-events:none;
+  transition:opacity .3s,transform .2s;
+}
+#topBtn.show{opacity:1;pointer-events:auto;}
+#topBtn:hover{transform:translateY(-3px);}
+
+/* ── DIVIDER ── */
+.divider{width:100%;height:1px;background:var(--border);position:relative;z-index:1;}
+
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  nav{padding:14px 20px;}
+  .nav-links{gap:18px;}
+  .hero-inner{grid-template-columns:1fr;text-align:center;}
+  .hero-photo-wrap{order:-1;justify-content:center;}
+  .hero-photo-wrap::before{width:240px;height:240px;}
+  .hero-photo-ring{width:232px;height:232px;}
+  .hero-desc{margin:16px auto 0;}
+  .hero-cta{justify-content:center;}
+  .about-stats{grid-template-columns:1fr 1fr;}
+  .contact-wrap{grid-template-columns:1fr;}
+  .edu-card{flex-direction:column;gap:14px;}
+}
+@media(max-width:480px){
+  .about-stats{grid-template-columns:1fr;}
+  .nav-links{gap:12px;}
+  .nav-links a{font-size:11px;}
 }
 </style>
-
 </head>
-
 <body>
 
-<header>
-<h1>Aknur Tokkara</h1>
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">aknur.dev</div>
+  <ul class="nav-links">
+    <li><a href="#about">about</a></li>
+    <li><a href="#skills">skills</a></li>
+    <li><a href="#projects">projects</a></li>
+    <li><a href="#education">edu</a></li>
+    <li><a href="#contact">contact</a></li>
+  </ul>
+</nav>
 
-<p>IT Student • Future Software Developer</p>
-
-</header>
-
-<section>
-
-<h2>About Me</h2>
-
-<div class="card">
-
-<p>
-Hello! My name is Aknur.
-I am an Information Technology student from Kazakhstan.
-Currently I study Python, HTML, CSS, JavaScript and SQL.
-I am looking for opportunities to gain real experience through internships and IT projects.
-</p>
-
-</div>
-
-<h2>Skills</h2>
-
-<div class="card skills">
-
-<span>Python</span>
-<span>HTML</span>
-<span>CSS</span>
-<span>JavaScript</span>
-<span>SQL</span>
-<span>Git</span>
-
-</div>
-
-<h2>Projects</h2>
-
-<div class="card">
-
-<h3>🎂 Birthday Website</h3>
-
-<p>
-Interactive birthday website created using HTML, CSS and JavaScript.
-</p>
-
-<a class="button" href="https://tokkaraaknur-sys.github.io/bday/" target="_blank">
-Open Project
-</a>
-
-</div>
-
-<h2>Contact</h2>
-
-<div class="card">
-
-<p>Email:</p>
-
-<p>
-<b>
-tokkaraaknur@gmail.com
-</b>
-</p>
-
-<br>
-
-<p>GitHub:</p>
-
-<a class="button" href="https://github.com/tokkaraaknur-sys" target="_blank">
-My GitHub
-</a>
-
-</div>
-
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <!-- Text -->
+    <div>
+      <div class="hero-badge"><span class="dot"></span> Open to internships &amp; opportunities</div>
+      <h1>Aknur<br>Tokkara</h1>
+      <p class="hero-role">IT Student &nbsp;·&nbsp; <span>Future Software Developer</span></p>
+      <p class="hero-desc">
+        Building things on the web, learning every day, and looking for real-world
+        experience to grow as a developer. Based in Kazakhstan 🇰🇿
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#projects">See My Work</a>
+        <a class="btn btn-ghost" href="#contact">Contact Me</a>
+      </div>
+    </div>
+    <!-- Photo -->
+    <div class="hero-photo-wrap">
+      <div class="hero-photo-ring">
+        <!-- Replace src with your real photo URL -->
+        <div class="hero-photo-placeholder">
+          <span>👩‍💻</span>
+          <small>Add your photo here</small>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="reveal">
+    <p class="sec-label">About Me</p>
+    <h2 class="sec-title">A Little About Myself</h2>
+    <div class="about-card">
+      <p>
+        Hi! I'm <strong>Aknur</strong>, an 18-year-old <strong>Information Technology student</strong>
+        from Kazakhstan. I'm passionate about web development and writing clean, meaningful code.
+        I study <strong>Python, HTML, CSS, JavaScript, and SQL</strong> and I'm always working
+        on something new — whether it's a personal project, a creative idea, or a challenge
+        that pushes my skills further. My goal is to land an <strong>internship</strong> where
+        I can grow fast, contribute real value, and become the developer I know I can be.
+      </p>
+      <div class="about-stats">
+        <div class="stat-box"><span class="stat-num">5+</span><div class="stat-lbl">Technologies</div></div>
+        <div class="stat-box"><span class="stat-num">1+</span><div class="stat-lbl">Projects</div></div>
+        <div class="stat-box"><span class="stat-num">3</span><div class="stat-lbl">Languages spoken</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="section" id="skills" style="padding-top:0">
+  <div class="reveal">
+    <p class="sec-label">Skills</p>
+    <h2 class="sec-title">What I Work With</h2>
+    <div class="skills-grid">
+      <div class="skill-chip"><span class="skill-icon">🐍</span>Python<div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div></div>
+      <div class="skill-chip"><span class="skill-icon">🌐</span>HTML<div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div></div>
+      <div class="skill-chip"><span class="skill-icon">🎨</span>CSS<div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div></div>
+      <div class="skill-chip"><span class="skill-icon">⚡</span>JavaScript<div class="skill-bar-wrap"><div class="skill-bar" style="width:65%"></div></div></div>
+      <div class="skill-chip"><span class="skill-icon">🗄️</span>SQL<div class="skill-bar-wrap"><div class="skill-bar" style="width:60%"></div></div></div>
+      <div class="skill-chip"><span class="skill-icon">🔀</span>Git<div class="skill-bar-wrap"><div class="skill-bar" style="width:70%"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="section" id="projects" style="padding-top:0">
+  <div class="reveal">
+    <p class="sec-label">Projects</p>
+    <h2 class="sec-title">Things I've Built</h2>
+    <div class="projects-grid">
+
+      <div class="proj-card">
+        <div class="proj-badge">✦ Featured</div>
+        <h3>🎂 Birthday Website</h3>
+        <p>
+          A fun, interactive surprise website created to celebrate someone's birthday.
+          Features smooth animations, a personalised message, and a delightful user experience
+          built entirely with vanilla HTML, CSS, and JavaScript.
+        </p>
+        <div class="tech-pills">
+          <span class="tech-pill">HTML</span>
+          <span class="tech-pill">CSS</span>
+          <span class="tech-pill">JavaScript</span>
+        </div>
+        <div class="proj-links">
+          <a class="btn btn-primary" href="https://tokkaraaknur-sys.github.io/bday/" target="_blank">🚀 Live Demo</a>
+          <a class="btn btn-ghost" href="https://github.com/tokkaraaknur-sys" target="_blank">GitHub ↗</a>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-badge">🚧 Coming Soon</div>
+        <h3>✨ Next Project</h3>
+        <p>
+          Currently working on new ideas and learning new technologies every day.
+          Stay tuned — more projects are on the way soon!
+        </p>
+        <div class="tech-pills">
+          <span class="tech-pill">Python</span>
+          <span class="tech-pill">JavaScript</span>
+          <span class="tech-pill">SQL</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section class="section" id="education" style="padding-top:0">
+  <div class="reveal">
+    <p class="sec-label">Education</p>
+    <h2 class="sec-title">My Background</h2>
+    <div class="edu-list">
+      <div class="edu-card">
+        <div class="edu-icon">🎓</div>
+        <div class="edu-body">
+          <div class="edu-school">University — Information Technologies</div>
+          <div class="edu-degree">Bachelor's Degree in IT &amp; Software Development</div>
+          <div class="edu-year">2023 — Present &nbsp;·&nbsp; Kazakhstan</div>
+        </div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-icon">🏫</div>
+        <div class="edu-body">
+          <div class="edu-school">Secondary School</div>
+          <div class="edu-degree">High School Diploma</div>
+          <div class="edu-year">Graduated 2023 &nbsp;·&nbsp; Kazakhstan</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LANGUAGES -->
+<section class="section" id="languages" style="padding-top:0">
+  <div class="reveal">
+    <p class="sec-label">Languages</p>
+    <h2 class="sec-title">I Speak</h2>
+    <div class="lang-grid">
+      <div class="lang-card">
+        <div class="lang-flag">🇰🇿</div>
+        <div class="lang-name">Kazakh</div>
+        <div class="lang-level">Native</div>
+        <div class="lang-dots">
+          <div class="lang-dot on"></div><div class="lang-dot on"></div>
+          <div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot on"></div>
+        </div>
+      </div>
+      <div class="lang-card">
+        <div class="lang-flag">🇷🇺</div>
+        <div class="lang-name">Russian</div>
+        <div class="lang-level">Fluent</div>
+        <div class="lang-dots">
+          <div class="lang-dot on"></div><div class="lang-dot on"></div>
+          <div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot"></div>
+        </div>
+      </div>
+      <div class="lang-card">
+        <div class="lang-flag">🇬🇧</div>
+        <div class="lang-name">English</div>
+        <div class="lang-level">Intermediate (B1)</div>
+        <div class="lang-dots">
+          <div class="lang-dot on"></div><div class="lang-dot on"></div>
+          <div class="lang-dot on"></div><div class="lang-dot"></div><div class="lang-dot"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact" style="padding-top:0">
+  <div class="reveal">
+    <p class="sec-label">Contact</p>
+    <h2 class="sec-title">Let's Connect</h2>
+    <div class="contact-wrap">
+      <a class="contact-card" href="mailto:tokkaraaknur@gmail.com">
+        <div class="contact-ico">✉️</div>
+        <div><div class="c-lbl">Email</div><div class="c-val">tokkaraaknur@gmail.com</div></div>
+      </a>
+      <a class="contact-card" href="https://github.com/tokkaraaknur-sys" target="_blank">
+        <div class="contact-ico">🐙</div>
+        <div><div class="c-lbl">GitHub</div><div class="c-val">tokkaraaknur-sys</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
-
-© 2026 Aknur Tokkara
-
+  <p>Designed &amp; built by <span>Aknur Tokkara</span> &nbsp;·&nbsp; © 2026</p>
 </footer>
 
+<!-- BACK TO TOP -->
+<button id="topBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</button>
+
+<script>
+/* scroll reveal */
+const revEls = document.querySelectorAll('.reveal');
+const skillChips = document.querySelectorAll('.skill-chip');
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+      io.unobserve(e.target);
+    }
+  });
+},{threshold:0.1});
+revEls.forEach(r=>io.observe(r));
+skillChips.forEach(c=>io.observe(c));
+
+/* mouse glow on project cards */
+document.querySelectorAll('.proj-card').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    card.style.setProperty('--mx',`${e.clientX-r.left}px`);
+    card.style.setProperty('--my',`${e.clientY-r.top}px`);
+  });
+});
+
+/* back to top */
+const topBtn=document.getElementById('topBtn');
+window.addEventListener('scroll',()=>{
+  topBtn.classList.toggle('show',window.scrollY>400);
+});
+</script>
 </body>
 </html>

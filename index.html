@@ -167,10 +167,22 @@ nav{
   font-family:'Plus Jakarta Sans',sans-serif;
 }
 .btn-primary{
-  background:var(--blue);color:#fff;
-  box-shadow:0 0 28px rgba(59,130,246,.35);
+  background:var(--blue);
+  color:#fff;
+  box-shadow:
+    0 0 15px rgba(59,130,246,.6),
+    0 0 35px rgba(59,130,246,.45),
+    0 0 60px rgba(59,130,246,.3);
 }
-.btn-primary:hover{background:#2563eb;transform:translateY(-2px);box-shadow:0 0 40px rgba(59,130,246,.5);}
+
+.btn-primary:hover{
+  background:#2563eb;
+  transform:translateY(-2px);
+  box-shadow:
+    0 0 20px rgba(59,130,246,.8),
+    0 0 45px rgba(59,130,246,.6),
+    0 0 80px rgba(59,130,246,.4);
+}
 .btn-ghost{
   background:transparent;color:var(--text);
   border:1px solid var(--border2);
